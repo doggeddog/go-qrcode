@@ -39,7 +39,7 @@ func TestExampleEncodeWithColourAndWithoutBorder(t *testing.T) {
 	}
 
 	// Optionally, disable the QR Code border.
-	q.DisableBorder = true
+	q.BorderWidth = 0
 
 	// Optionally, set the colours.
 	q.ForegroundColor = color.RGBA{R: 0x33, G: 0x33, B: 0x66, A: 0xff}

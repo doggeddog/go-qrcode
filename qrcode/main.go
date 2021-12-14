@@ -15,9 +15,9 @@ import (
 func main() {
 	outFile := flag.String("o", "", "out PNG file prefix, empty for stdout")
 	size := flag.Int("s", 256, "image size (pixel)")
+	border := flag.Int("b", 2, "border size (character)")
 	textArt := flag.Bool("t", false, "print as text-art on stdout")
 	negative := flag.Bool("i", false, "invert black and white")
-	disableBorder := flag.Bool("d", false, "disable QR Code border")
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, `qrcode -- QR Code encoder in Go
 https://github.com/skip2/go-qrcode
@@ -45,7 +45,6 @@ Usage:
 		flag.Usage()
 		checkError(fmt.Errorf("Error: no content given"))
 	}
-
 	content := strings.Join(flag.Args(), " ")
 
 	var err error
@@ -53,13 +52,11 @@ Usage:
 	q, err = qrcode.New(content, qrcode.Highest)
 	checkError(err)
 
-	if *disableBorder {
-		q.DisableBorder = true
-	}
+	q.BorderWidth = *border
 
 	if *textArt {
-		art := q.ToString(*negative)
-		fmt.Println(art)
+		art := q.ToSmallString(*negative)
+		printWithColor(art, "\033[38;5;039m\033[48;5;016m")
 		return
 	}
 
@@ -86,5 +83,16 @@ func checkError(err error) {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 		os.Exit(1)
+	}
+}
+
+func printWithColor(text, color string) {
+	for _, line := range strings.Split(text, "\n") {
+		// set color
+		fmt.Print(color)
+		fmt.Print(line)
+		// reset
+		fmt.Print("\033[0m")
+		fmt.Println()
 	}
 }

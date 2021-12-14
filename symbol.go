@@ -43,20 +43,20 @@ type symbol struct {
 
 // newSymbol constructs a symbol of size size*size, with a border of
 // quietZoneSize.
-func newSymbol(size int, quietZoneSize int) *symbol {
+func newSymbol(size int, borderWidth int) *symbol {
 	var m symbol
 
-	m.module = make([][]bool, size+2*quietZoneSize)
-	m.isUsed = make([][]bool, size+2*quietZoneSize)
+	m.module = make([][]bool, size+2*borderWidth)
+	m.isUsed = make([][]bool, size+2*borderWidth)
 
 	for i := range m.module {
-		m.module[i] = make([]bool, size+2*quietZoneSize)
-		m.isUsed[i] = make([]bool, size+2*quietZoneSize)
+		m.module[i] = make([]bool, size+2*borderWidth)
+		m.isUsed[i] = make([]bool, size+2*borderWidth)
 	}
 
-	m.size = size + 2*quietZoneSize
+	m.size = size + 2*borderWidth
 	m.symbolSize = size
-	m.quietZoneSize = quietZoneSize
+	m.quietZoneSize = borderWidth
 
 	return &m
 }

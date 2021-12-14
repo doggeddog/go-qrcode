@@ -136,8 +136,7 @@ type QRCode struct {
 	ForegroundColor color.Color
 	BackgroundColor color.Color
 
-	// Disable the QR Code border.
-	DisableBorder bool
+	BorderWidth int
 
 	encoder *dataEncoder
 	version qrCodeVersion
@@ -403,7 +402,7 @@ func (q *QRCode) encode() {
 		var s *symbol
 		var err error
 
-		s, err = buildRegularSymbol(q.version, mask, encoded, !q.DisableBorder)
+		s, err = buildRegularSymbol(q.version, mask, encoded, q.BorderWidth)
 
 		if err != nil {
 			log.Panic(err.Error())
