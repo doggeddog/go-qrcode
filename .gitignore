@@ -2,3 +2,5 @@
 *.png
 *.directory
 qrcode/qrcode
+.DS_Store
+.idea

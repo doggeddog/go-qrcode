@@ -16,6 +16,7 @@ func main() {
 	outFile := flag.String("o", "", "out PNG file prefix, empty for stdout")
 	size := flag.Int("s", 256, "image size (pixel)")
 	border := flag.Int("b", 2, "border size (character)")
+	level := flag.Int("l", 1, "recovery level")
 	textArt := flag.Bool("t", false, "print as text-art on stdout")
 	negative := flag.Bool("i", false, "invert black and white")
 	flag.Usage = func() {
@@ -49,14 +50,14 @@ Usage:
 
 	var err error
 	var q *qrcode.QRCode
-	q, err = qrcode.New(content, qrcode.Highest)
+	q, err = qrcode.New(content, qrcode.RecoveryLevel(*level))
 	checkError(err)
 
 	q.BorderWidth = *border
 
 	if *textArt {
 		art := q.ToSmallString(*negative)
-		printWithColor(art, "\033[38;5;039m\033[48;5;016m")
+		printWithColor(art, "\033[38;5;0016m\033[48;5;015m")
 		return
 	}
 
