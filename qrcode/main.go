@@ -57,7 +57,8 @@ Usage:
 
 	if *textArt {
 		art := q.ToSmallString(*negative)
-		printWithColor(art, "\033[38;5;0016m\033[48;5;015m")
+		//printWithColor(art, "\033[38;5;015m\033[48;5;016m")
+		printWithColor(art, "")
 		return
 	}
 
@@ -97,3 +98,4 @@ func printWithColor(text, color string) {
 		fmt.Println()
 	}
 }
+
